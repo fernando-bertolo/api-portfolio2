@@ -1,5 +1,6 @@
 import { Router, Express, Request, Response } from "express";
 import { EmailService } from "../services/EmailService";
+import { EmailDTO } from "../DTO/EmailDTO";
 
 export class EmailController {
     private name: string;
@@ -7,11 +8,11 @@ export class EmailController {
     private telefone: string;
     private mensagem: string;
 
-    constructor(name: string, email: string, telefone: string, mensagem: string) {
-        this.name = name;
-        this.email = email;
-        this.telefone = telefone;
-        this.mensagem = mensagem;
+    constructor(data: EmailDTO) {
+        this.name = data.getName();
+        this.email = data.getEmail();
+        this.telefone = data.getTelefone();
+        this.mensagem = data.getMensagem();
     }
 
     public async sendEmail(req: Request, res: Response): Promise<Response> {
