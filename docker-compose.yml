@@ -5,6 +5,8 @@ services:
       - "3333:3000"
     env_file:
       - .env
+    environment:
+      - CHOKIDAR_USEPOLLING=true #Para o container identificar as alterações
     volumes:
       - .:/app
       - /app/node_modules

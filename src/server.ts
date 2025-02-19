@@ -12,7 +12,7 @@ app.post("/email", async (req: Request, res: Response) => {
     const { nome, email, telefone, mensagem } = req.body;
     const dataEmailDto = new EmailDTO(nome, email, telefone, mensagem);
 
-    if (!dataEmailDto.getName || !dataEmailDto.getEmail || !dataEmailDto.getTelefone || !dataEmailDto.getMensagem) {
+    if (!dataEmailDto.getName() || !dataEmailDto.getEmail() || !dataEmailDto.getTelefone() || !dataEmailDto.getMensagem()) {
         res.status(400).json({ message: "Por favor, preencha todos os campos." });
     }
     await new EmailController(dataEmailDto).sendEmail(req, res);
