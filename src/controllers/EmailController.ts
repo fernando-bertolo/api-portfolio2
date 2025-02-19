@@ -1,31 +1,22 @@
-import express, { Router, Express, Request, Response } from "express";
+import { Router, Express, Request, Response } from "express";
+import { EmailService } from "../services/EmailService";
 
 export class EmailController {
-    private app: Express;
-    private route: Router;
+    private name: string;
+    private email: string;
+    private telefone: string;
+    private mensagem: string;
 
-    constructor(app: Express) {
-        this.app = app;
-        this.route = Router();
-        this.setupRoutes();
-        this.app.use("/api", this.route);
+    constructor(name: string, email: string, telefone: string, mensagem: string) {
+        this.name = name;
+        this.email = email;
+        this.telefone = telefone;
+        this.mensagem = mensagem;
     }
 
-    private setupRoutes() {
-        this.route.post("/email", this.sendEmail);
-    }
-
-    public sendEmail(req: Request, res: Response) {
-        try {
-            const { name, email, telefone, mensagem } = req.body;
-
-            if (!name || !email || !telefone || !mensagem) {
-                return res.status(400).json({ message: "Por favor, preencha todos os campos." });
-            }
-
-            return res.status(200).json({ message: "E-mail enviado com sucesso!" })
-        } catch (error) {
-            return res.status(500).json({ message: "Erro ao enviar e-mail" })
-        }
+    public async sendEmail(req: Request, res: Response): Promise<Response> {
+        const emailService = new EmailService();
+        await emailService.sendEmail(this.name, this.email, this.telefone, this.mensagem);
+        return res.status(200).json({ message: "E-mail enviado com sucesso!" })
     }
 }
