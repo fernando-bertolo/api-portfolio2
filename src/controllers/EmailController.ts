@@ -15,9 +15,9 @@ export class EmailController {
         this.mensagem = data.getMensagem();
     }
 
-    public async sendEmail(req: Request, res: Response): Promise<Response> {
+    public async sendEmail(req: Request, res: Response): Promise<boolean> {
         const emailService = new EmailService();
         await emailService.sendEmail(this.name, this.email, this.telefone, this.mensagem);
-        return res.status(200).json({ message: "E-mail enviado com sucesso!" })
+        return true;
     }
 }

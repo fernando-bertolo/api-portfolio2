@@ -15,7 +15,11 @@ app.post("/email", async (req: Request, res: Response) => {
     if (!dataEmailDto.getName() || !dataEmailDto.getEmail() || !dataEmailDto.getTelefone() || !dataEmailDto.getMensagem()) {
         res.status(400).json({ message: "Por favor, preencha todos os campos." });
     }
-    await new EmailController(dataEmailDto).sendEmail(req, res);
+    const result = await new EmailController(dataEmailDto).sendEmail(req, res);
+    if (!result) {
+        res.status(400).json({ message: "Falha ao enviar e-mail, tente novamente mais tarde!!" });
+    }
+    res.status(200).json({ message: "Email enviado com sucesso." });
 });
 
 app.listen(3000, () => {
