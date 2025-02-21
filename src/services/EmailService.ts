@@ -14,7 +14,7 @@ export class EmailService {
             },
         });
 
-        await smtp.sendMail({
+        return await smtp.sendMail({
             from: process.env.MAIL_USER,
             to: "bertolo.dev@gmail.com",
             subject: "Contato do portfolio",
